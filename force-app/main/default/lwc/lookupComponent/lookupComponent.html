@@ -1,0 +1,119 @@
+<template>
+    <div class="slds-form-element">
+        
+        <!-- Label -->
+        <label class="slds-form-element__label">
+            <abbr class="slds-required" title="required">*</abbr>
+            {label}
+        </label>
+
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class={comboboxClass}>
+
+                    <!-- Search Input -->
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                         role="none">
+                        <lightning-icon
+                            icon-name="utility:search"
+                            size="x-small"
+                            class="slds-icon slds-input__icon slds-input__icon_right">
+                        </lightning-icon>
+                        <input
+                            type="text"
+                            class="slds-input slds-combobox__input"
+                            placeholder={placeholder}
+                            value={searchTerm}
+                            oninput={handleInput}
+                            onfocus={handleFocus}
+                            onblur={handleBlur}
+                        />
+                    </div>
+
+                    <!-- Dropdown Results -->
+                    <template if:true={isOpen}>
+                        <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                             role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+
+                                <!-- Loading -->
+                                <template if:true={isLoading}>
+                                    <li class="slds-listbox__item">
+                                        <div class="slds-align_absolute-center slds-p-around_medium">
+                                            <lightning-spinner
+                                                alternative-text="Searching..."
+                                                size="small">
+                                            </lightning-spinner>
+                                        </div>
+                                    </li>
+                                </template>
+
+                                <!-- Results -->
+                                <template if:false={isLoading}>
+                                    <template for:each={results} for:item="result">
+                                        <li key={result.id}
+                                            class="slds-listbox__item"
+                                            onmousedown={handleSelect}
+                                            data-id={result.id}
+                                            data-title={result.title}>
+                                            <span class="slds-media slds-listbox__option
+                                                         slds-listbox__option_entity
+                                                         slds-listbox__option_has-meta"
+                                                  role="option">
+                                                <span class="slds-media__figure slds-listbox__option-icon">
+                                                    <lightning-icon
+                                                        icon-name={result.icon}
+                                                        size="small">
+                                                    </lightning-icon>
+                                                </span>
+                                                <span class="slds-media__body">
+                                                    <span class="slds-listbox__option-text">
+                                                        {result.title}
+                                                    </span>
+                                                    <span class="slds-listbox__option-meta">
+                                                        {result.subtitle}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </li>
+                                    </template>
+
+                                    <!-- No Results -->
+                                    <template if:true={noResults}>
+                                        <li class="slds-listbox__item">
+                                            <span class="slds-media slds-listbox__option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-listbox__option-text
+                                                                 slds-text-color_weak">
+                                                        No results found for "{searchTerm}"
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </li>
+                                    </template>
+                                </template>
+
+                            </ul>
+                        </div>
+                    </template>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Selected Item -->
+        <template if:true={selectedItem}>
+            <div class="slds-m-top_x-small">
+                <lightning-pill
+                    label={selectedItem.title}
+                    onremove={handleRemove}>
+                    <lightning-icon
+                        icon-name={selectedItem.icon}
+                        slot="media">
+                    </lightning-icon>
+                </lightning-pill>
+            </div>
+        </template>
+
+    </div>
+</template>
