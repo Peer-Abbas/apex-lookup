@@ -1,4 +1,4 @@
-# ⚡ Apex Lookup Practice
+# ⚡ Apex Lookup
 
 A professional Salesforce project demonstrating **Apex Lookups** with
 Lightning Web Components (LWC), built from scratch using Salesforce CLI.
@@ -109,7 +109,7 @@ Pass Rate: 100%
 
 ---
 
-## 💡 Key Concepts Learned
+## 💡 Key Concepts
 
 | Concept | Description |
 |---|---|
